@@ -50,13 +50,14 @@ services:
 
   web:
     build:
-      context: .
-      dockerfile: ./web/Dockerfile.dev
+      context: ../
+      dockerfile: ./plane/web/Dockerfile.dev
     restart: unless-stopped
     networks:
       - dev_env
     volumes:
       - ./web:/app/web
+      - ../design-system:/app/design-system
     env_file:
       - ./web/.env
     depends_on:

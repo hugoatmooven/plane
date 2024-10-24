@@ -11,6 +11,11 @@ import { SITE_NAME, SITE_DESCRIPTION } from "@/constants/meta";
 import { API_BASE_URL, cn } from "@/helpers/common.helper";
 // local
 import { AppProvider } from "./provider";
+import { AggregateFrame } from "design-system/molecules/aggregate-frame";
+import Image from "next/image";
+import MoovenLogoMark from "design-system/svg/mooven-logomark.svg";
+import { CalendarIcon, CarIcon } from 'design-system/atoms/custom-icons';
+import { ViewIcon } from '@chakra-ui/icons';
 
 export const metadata: Metadata = {
   title: "Plane | Simple, extensible, open-source project management tool.",
@@ -73,17 +78,50 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <div id="context-menu-portal" />
-        <AppProvider>
-          <div
-            className={cn(
-              "h-screen w-full overflow-hidden bg-custom-background-100 relative flex flex-col",
-              "app-container"
-            )}
-          >
-            <div className="w-full h-full overflow-hidden relative">{children}</div>
-          </div>
-        </AppProvider>
+        <AggregateFrame
+          logo={
+            <a href="http://localhost:3000/">
+              <Image
+                src={MoovenLogoMark}
+                width={36}
+              />
+            </a>
+          }
+          // apps={[
+          //   {
+          //     name: 'Programme',
+          //     icon: <Image
+          //     src={CalendarIcon}
+          //     width={36}
+          //   />,
+          //     url: 'http://localhost:3030/moovenworspace/projects/',
+          //   },
+          //   {
+          //     name: 'Sites',
+          //     icon: <CarIcon width="36px" />,
+          //     url: '/sites/3001/view',
+          //   },
+          //   {
+          //     name: 'Dashboard',
+          //     icon: <ViewIcon width="36px" />,
+          //     url: '/',
+          //   },
+          // ]}
+        >
+          <>
+            <div id="context-menu-portal" />
+            <AppProvider>
+              <div
+                className={cn(
+                  "h-screen w-full overflow-hidden bg-custom-background-100 relative flex flex-col",
+                  "app-container"
+                )}
+              >
+                <div className="w-full h-full overflow-hidden relative">{children}</div>
+              </div>
+            </AppProvider>
+          </>
+        </AggregateFrame>
       </body>
       {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
         <Script defer data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} src="https://plausible.io/js/script.js" />

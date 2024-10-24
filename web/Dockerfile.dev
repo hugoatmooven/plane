@@ -1,12 +1,22 @@
 FROM node:18-alpine
 RUN apk add --no-cache libc6-compat
 # Set working directory
+
+WORKDIR /app/design-system
+COPY ./design-system ./
+RUN yarn link
+
+WORKDIR /app/web
+RUN yarn link design-system
+
 WORKDIR /app
 
 
-COPY . .
+COPY ./plane ./
+# COPY ./design-system ./design-system
 RUN yarn global add turbo
-RUN yarn install
+RUN yarn install --ignore-engines
 EXPOSE 3000
-VOLUME [ "/app/node_modules", "/app/web/node_modules" ]
+VOLUME [ "/app/node_modules", "/app/web/node_modules", "/design-system/node_modules" ]
 CMD ["yarn", "dev", "--filter=web"]
+# CMD [ "sleep", "infinity" ]
